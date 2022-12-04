@@ -16,26 +16,23 @@
 <!-- Load Babel -->
 <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 <script type="text/babel">
-  let counter = 0;
-  function countUp(){
-    counter = counter+1;
-  }
-  const Container = () => (
-    <div>
-      <span>Total clicks: {counter}</span>
-      <button onClick={countUp}>Click me!</button>
-    </div>
-  );
+
+  function App() {
+    const [counter, setCounter] = React.useState(0);
+    const onClick = () => {
+      setCounter(counter+1);
+    }
+    return (
+      <div>
+        <div>Total clicks: {counter}</div>
+        <button onClick={onClick}>Click me!</button>
+      </div>
+    )
+  };
 
   const app = document.getElementById("app");
-  ReactDOM.createRoot(app).render(<Container />);
+  ReactDOM.createRoot(app).render(<App />);
 
 </script>
 
 </html>
-
-<!--
-
-
-  
--->

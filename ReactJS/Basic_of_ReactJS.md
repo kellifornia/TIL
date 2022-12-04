@@ -172,7 +172,105 @@
 */
 </script>
 ```
-`React`, `JSX`, `Babel`을 이용하여 html element를 생성하고 이벤트를 추가했는데, counter값 변경은 어떻게 구현해줘야 할까? vanilla처럼 각 객체에 설정된 이벤트에 동작 함수를 걸어야 하는 걸까? 이벤트 버블링을 활용해볼 수 없을까? React State를 공부해보자!
+`React`, `JSX`, `Babel`을 이용하여 html element를 생성하고 이벤트를 추가했는데, counter값 변경은 어떻게 구현해줘야 할까? vanilla처럼 각 객체에 설정된 이벤트에 동작 함수를 걸어야 하는 걸까? React State를 공부해보자!
 
 ## 2. Understanding React State!⭐️
 
+counter변수를 추가한 모습이다. 이 코드를 화면에서 돌려보면 counter변수 값은 증가하는데, 화면 갱신이 일어나지 않는다.
+
+```html
+<body>
+  <div id="app"></div>
+</body>
+<script type="text/babel">
+  let counter = 0;
+  function countUp(){
+    counter = counter+1;
+  }
+  const Container = () => (
+    <div>
+      <span>Total clicks: {counter}</span>
+      <button onClick={countUp}>Click me!</button>
+    </div>
+  );
+
+  const app = document.getElementById("app");
+  ReactDOM.createRoot(app).render(<Container />);
+
+</script>
+```
+보는 것처럼 이 코드는 Container를 한번만 렌더링하고 리렌더링을 하는 부분이 없다. 그렇다면 countUp함수가 호출될때마다 Counter를 렌더링하려면 어떻게 해야될까?
+
+```javascript
+let counter = 0;
+function countUp(){
+  counter = counter+1;
+  // 간단하게 counterUp함수가 호출될때마다 렌더링 시키기!
+  ReactDOM.createRoot(app).render(<Container />);
+}
+const Container = () => (
+  <div>
+    <span>Total clicks: {counter}</span>
+    <button onClick={countUp}>Click me!</button>
+  </div>
+);
+
+const app = document.getElementById("app");
+ReactDOM.createRoot(app).render(<Container />);
+```
+함수가 늘어날수록 위 코드는 비효율적이다! reRender함수를 만들어보자!
+
+```javascript
+const app = document.getElementById("app");
+let counter = 0;
+
+function countUp(){
+  counter = counter+1;
+  render();
+}
+
+// render 함수 추가!
+function render(){
+  ReactDOM.createRoot(app).render(<Container />);
+}
+
+const Container = () => (
+  <div>
+    <span>Total clicks: {counter}</span>
+    <button onClick={countUp}>Click me!</button>
+  </div>
+);
+
+render();
+```
+> react를 이용한 렌더링은 vanilla와 비교해서 어떤점이 좋을까? countUp함수가 호출되면 Container 전체가 리렌더링 될거 같지만, 변화가 필요한 부분인 counter변수만 갱신이 일어나는 걸 확인할 수 있다. 이게 바로 react의 강점이다!
+> ![React Rendering](./images/React_Rendering.png)
+
+사실 react에서는 이것보다 더 좋은 렌더링 방법이 존재한다.
+
+### 2-1) setState : `useState`, react hook api
+
+> `useState` : 상태 유지 값과 그 값을 갱신하는 함수를 반환한다.
+> ```javascript
+> const [상태값, 상태값을_갱신할_함수] = useState(초기값);
+> 상태값을_갱신할_함수(갱신할_상태값);
+> ```
+
+```javascript
+function App() {
+  // 초기 counter상태값을 0으로 등록하고 갱신시, setCounter 함수를 사용한다.
+  const [counter, setCounter] = React.useState(0);
+  const onClick = () => {
+    setCounter(counter+1);
+  }
+  return (
+    <div>
+      <div>Total clicks: {counter}</div>
+      <button onClick={onClick}>Click me!</button>
+    </div>
+  )
+};
+
+const app = document.getElementById("app");
+ReactDOM.createRoot(app).render(<App />);
+```
