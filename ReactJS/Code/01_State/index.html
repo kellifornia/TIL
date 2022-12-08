@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <div id="app"></div>
+</body>
+<script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+<!-- Load Babel -->
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<script type="text/babel">
+
+  function App() {
+    const [amount, setAmount] = React.useState(0);
+    const [flipped, setFlipped] = React.useState(false);
+
+    const onChange = ({ target }) => {
+      setAmount(target.value);
+    };
+
+    const onFlipp = () => {
+      reset();
+      setFlipped(current => !current);
+    }
+    const reset = () => setAmount(0);
+    return (
+      <div>
+        <h1>Super Converter</h1>
+        <div>
+          <label htmlFor="minutes">Minutes</label>
+          <input
+            value={flipped ? amount * 60 : amount}
+            onChange={onChange}
+            disabled={flipped}
+            id="minutes"
+            type="number"
+            placeholder="Minutes"></input>
+        </div>
+        <div>
+          <label htmlFor="hours">Hours</label>
+          <input
+            value={flipped ? amount : amount / 60}
+            onChange={onChange}
+            disabled={!flipped}
+            id="hours"
+            type="number"
+            placeholder="Hours"></input>
+        </div>
+        <button onClick={reset}>Reset</button>
+        <button onClick={onFlipp}>Flipped</button>
+      </div>
+    )
+  };
+
+  const app = document.getElementById("app");
+  ReactDOM.createRoot(app).render(<App />);
+
+</script>
+
+</html>

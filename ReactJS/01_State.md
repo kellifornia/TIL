@@ -1,5 +1,5 @@
 # The Basic of React
-> 노마드코더 React 강의 참고
+> 노마드코더 React Basic 강의
 
 ## 1.why React?
 
@@ -174,7 +174,7 @@
 ```
 `React`, `JSX`, `Babel`을 이용하여 html element를 생성하고 이벤트를 추가했는데, counter값 변경은 어떻게 구현해줘야 할까? vanilla처럼 각 객체에 설정된 이벤트에 동작 함수를 걸어야 하는 걸까? React State를 공부해보자!
 
-## 2. Understanding React State!⭐️
+## 2.Understanding React State!⭐️
 
 counter변수를 추가한 모습이다. 이 코드를 화면에서 돌려보면 counter변수 값은 증가하는데, 화면 갱신이 일어나지 않는다.
 
@@ -274,3 +274,187 @@ function App() {
 const app = document.getElementById("app");
 ReactDOM.createRoot(app).render(<App />);
 ```
+
+아래코드를 실행했을 때, console.log는 처음 랜더링했을 때만 실행될 것이라고 생각했다.
+
+```javascript
+function App() {
+  const [counter, setCounter] = React.useState(0);
+  const onClick = () => {
+    setCounter(counter+1);
+  }
+  console.log(counter);
+  console.log("rerender");
+  return (
+    <div>
+      <div>Total clicks: {counter}</div>
+      <button onClick={onClick}>Click me!</button>
+    </div>
+  )
+};
+```
+![React useState](./images/React_useState.png)
+
+#### 🙄😨🧐🙄
+그러나 실제 counter가 변경되는 이벤트(onClick) 됐을때마다 console.log 함수가 실행됨을 확인할 수 있다. react는 어떻게 이게 가능할까? 심지어 화면은 counter변수만 갱신해줌ㄷㄷ
+counter값이 바뀔때마다 App함수가 다시 렌더링된다..? **state값이 변경될 때마다 react는 컴포넌트 전체를 렌더링한 뒤, 이걸 실제 렌더트리와 비교해서 다른 부분만 바꿔주나?**
+> setState가 호출될때마다(state변경시) 다시렌더하는 범위는 어떻게 되나..? 함수범위까지 인듯?
+
+### 2-2) state funtions
+
+setState로 현재 state 값을 기준으로 변경이 필요할 때는 state변수를 직접 사용하는 것보다 setStatus의 첫번째 인자는 state임을 이용하여 아래처럼 작성하는 것이 좋다.(예상치 못한 state 업데이트가 어딘가에서 일어났을 때, 혼동을 주는걸 방지할 수 있다.)
+```javascript
+const [state, setState] = React.useState(0);
+const onClick = () => {
+  // setCounter(state+1);
+  setCounter((currnetState) => currnetState+1);
+}
+```
+
+아래코드의 문제점은 뭘까?
+```javascript
+function App() {
+  return (
+    <div>
+      <h1>Super Converter</h1>
+      <label for="minutes">Minutes</label>
+      <input id="minutes" type="number" placeholder="Minutes"></input>
+      <label for="hours">Hours</label>
+      <input id="hours" type="number" placeholder="Hours"></input>
+    </div>
+  )
+```
+![JSX](./images/React_JSX.png)
+
+이 코드의 문제점은 'for'이다. App함수의 return문은 `JSX`를 쓰고 있다. 즉, 일반적인 html문법이 아니다!. 'for', 'class' 등은 자바스크립트에서 이미 선점된 언어이다.
+즉, `JSX`에 맞는 문법을 사용해야한다.
+```javascript
+function App() {
+  return (
+    <div>
+      <h1>Super Converter</h1>
+      <label htmlFor="minutes">Minutes</label>
+      <input id="minutes" type="number" placeholder="Minutes"></input>
+      <label htmlFor="hours">Hours</label>
+      <input id="hours" type="number" placeholder="Hours"></input>
+    </div>
+  )
+```
+
+#### [실습1] minutes&hours converter 구현해보기
+- minutes <-> hours 양방향 전환
+- reset 버튼
+- minutes 입력중에는 hours 입력불가(disabled) : flipped 버튼
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <div id="app"></div>
+</body>
+<script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+<!-- Load Babel -->
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<script type="text/babel">
+
+  function App() {
+    const [amount, setAmount] = React.useState(0);
+    const [flipped, setFlipped] = React.useState(false);
+
+    const onChange = ({ target }) => {
+      setAmount(target.value);
+    };
+
+    const onFlipp = () => {
+      reset();
+      setFlipped(current => !current);
+    }
+    const reset = () => setAmount(0);
+    return (
+      <div>
+        <h1>Super Converter</h1>
+        <div>
+          <label htmlFor="minutes">Minutes</label>
+          <input
+            value={flipped ? amount * 60 : amount}
+            onChange={onChange}
+            disabled={flipped}
+            id="minutes"
+            type="number"
+            placeholder="Minutes"></input>
+        </div>
+        <div>
+          <label htmlFor="hours">Hours</label>
+          <input
+            value={flipped ? amount : amount / 60}
+            onChange={onChange}
+            disabled={!flipped}
+            id="hours"
+            type="number"
+            placeholder="Hours"></input>
+        </div>
+        <button onClick={reset}>Reset</button>
+        <button onClick={onFlipp}>Flipped</button>
+      </div>
+    )
+  };
+
+  const app = document.getElementById("app");
+  ReactDOM.createRoot(app).render(<App />);
+
+</script>
+</html>
+```
+
+> #### [Question]
+> - [테스트코드](./Code/01_State/setState.html)
+> 
+> 강의를 듣기전에 먼저 코드를 짜보면서 **setState의 동작**과 **rerender가 일어나는 과정**에 궁금증이 생겼다.
+> 
+> [1] 먼저 setState에 값을 넣는 경우 state는 그 값으로 갱시되고 rerender가 일어난다.
+> ```javascript
+> const [minutes, setMinutes] = React.useState(0);
+> setMinutes(minutes+1); // minutes = minutes+1;
+>```
+> 
+> [2] setState 인자에 함수를 전달하는 경우, 해당 함수의 실행 결과가 state값이 된다. 또한 인자로 전달된 함수에 매게변수가 있다면, setState는 해당함수의 매개변수로 state값을 사용하는 걸로 보인다.
+> 
+> ```javascript
+> const [minutes, setMinutes] = React.useState(0);
+> const argvFn = (a) => a+1;
+> setMinutes(argvFn); // minutes = argvFn(minutes);
+>```
+>
+> [3] rerender가 일어나는 건 setState가 실행될때(즉, state값이 변경됐을 때!) 리엑트가 가상DOM을 그리는 것으로 이해했는데... 왜 아래처럼 setState를 두번 호출했는데, conole.log가 한번만 찍히는가? 이벤트 단위로 rerender...?
+> (이 코드가 이해가 안간다면 [여기](#2-2-state-funtions))
+> 
+> ```javascript
+> const onChange = ({ target }) => {
+>   const { id, value } = target
+>   if (id === "minutes") {
+>     setMinutes(value);
+>     setHours(value / 60);
+>   }
+>}
+> console.log('log!');
+>```
+> 
+> #### [answer]
+> 리엑트의 setState는 비동기로 실행되며, setState를 연속으로 호출하면 모두 취합(batch)한 뒤에 한번에 렌더링을 진행한다. 그러면 100번의 상태값변경이 있어도 한 번의 렌더링으로 최신 상태를 유지할 수 있다.
+> [📌 setState가 비동기인 이유](https://velog.io/@zuzokim/React-setState%EA%B0%80-%EB%B9%84%EB%8F%99%EA%B8%B0%EC%9D%B8-%EC%9D%B4%EC%9C%A0)
+> [📌 state 갱신할 때, setState를 써야하는 이유](https://leehwarang.github.io/2020/07/28/setState.html)
+
+
+### 2-3) Challenge!
+JSX와 setState를 활용하여 앞서 작성한 [minutes&time Converter](./Code/01_State/setState.html)를 컴포넌트 단위로 개선해보자!
+
+- [컴포넌트로 쪼개기](./Code/01_State/challenge.html)
