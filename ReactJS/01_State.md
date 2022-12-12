@@ -450,11 +450,14 @@ function App() {
 > 
 > #### [answer]
 > 리엑트의 setState는 비동기로 실행되며, setState를 연속으로 호출하면 모두 취합(batch)한 뒤에 한번에 렌더링을 진행한다. 그러면 100번의 상태값변경이 있어도 한 번의 렌더링으로 최신 상태를 유지할 수 있다.
+> 
 > [📌 setState가 비동기인 이유](https://velog.io/@zuzokim/React-setState%EA%B0%80-%EB%B9%84%EB%8F%99%EA%B8%B0%EC%9D%B8-%EC%9D%B4%EC%9C%A0)
+> 
 > [📌 state 갱신할 때, setState를 써야하는 이유](https://leehwarang.github.io/2020/07/28/setState.html)
+> 
 
 
 ### 2-3) Challenge!
 JSX와 setState를 활용하여 앞서 작성한 [minutes&time Converter](./Code/01_State/setState.html)를 컴포넌트 단위로 개선해보자!
 
-- [컴포넌트로 쪼개기](./Code/01_State/challenge.html)
+- [Challenge Code](./Code/01_State/challenge.html)

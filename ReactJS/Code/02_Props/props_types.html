@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <div id="app"></div>
+</body>
+<script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<!-- prop-types -->
+<script src="https://unpkg.com/prop-types@15.6/prop-types.js"></script>
+<script type="text/babel">
+
+  function Btn({text, fontSize}) {
+    return <button
+      style={{
+        fontSize,
+        backgroundColor: "tomato",
+        color: "white",
+        padding: "10px 20px",
+        border: 0,
+        borderRadius: 10,
+      }}>{text}</button>;
+  }
+
+  Btn.propTypes = {
+    text: PropTypes.string,
+    fontSize: PropTypes.number
+  }
+
+  function App() {
+    const [value, setValue] = React.useState("Save Changes");
+    const changeValue = () => setValue("Revert Change");
+    return (
+      <div>
+        <Btn text={value} fontSize={"18"} />
+        <Btn text="Continue" />
+      </div>
+    )
+  };
+  const app = document.getElementById("app");
+  ReactDOM.createRoot(app).render(<App />);
+
+</script>
+
+</html>
