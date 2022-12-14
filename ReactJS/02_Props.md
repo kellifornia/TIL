@@ -116,7 +116,7 @@ ReactDOM.createRoot(app).render(<App />);
 ### 1-3) PropTypes
 [📌 PropTypes Docs](https://ko.reactjs.org/docs/typechecking-with-proptypes.html)
 
-`PropTypes`이란 어떤 타입의 prop을 받고 있는지 체크할 때 사용하는 라이브러리 이다.
+`PropTypes`이란 어떤 타입의 prop을 받고 있는지 체크할 때 사용하는 라이브러리이다.
 
 ```javascript
 function Btn({text, fontSize}) {
