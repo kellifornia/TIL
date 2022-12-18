@@ -1,12 +1,25 @@
 import React from 'react';
-import Button from './Button';
-import styled from './App.module.css'
+import { useState, useEffect } from 'react';
+// import Button from './Button';
+// import styled from './App.module.css'
+
+function Hello() {
+
+  useEffect(() => {
+    console.log("created");
+    return console.log("destroyed");
+  }, []);
+  return <h1>Hello</h1>
+}
 
 function App() {
+  const [showing, setShowing] = useState(false);
+  const onClick = () => setShowing(prev => !prev);
+
   return (
     <div>
-      <h1 className={styled.title}>Hello! this is my first react app!</h1>
-      <Button text={11}/>
+      {showing ? <Hello /> : null}
+      <button onClick={onClick}>{showing ? "hide" : "show"}</button>
     </div>
   );
 }
