@@ -1,7 +1,7 @@
 import React from 'react';
 import { useState } from 'react';
 
-function Todo() {
+function Todo({style}) {
   const [toDo, setToDo] = useState("");
   const [toDos, setToDos] = useState([]);
   const onChange = (event) => setToDo(event.target.value);
@@ -14,7 +14,7 @@ function Todo() {
 
   console.log(toDos);
   return (
-    <div>
+    <div style={style}>
       <h1>TODO 👩🏻‍💻</h1>
       <form onSubmit={onSubmit}>
       <input
@@ -24,7 +24,6 @@ function Todo() {
         placeholder='Write your to do....' />
       <button>Add To Do</button>
       </form>
-      <hr/>
       {toDos.map((item, index) => <li key={index}>{item}</li>)}
     </div>
   );
