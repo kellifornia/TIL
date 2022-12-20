@@ -14,14 +14,14 @@ function Movies() {
     setLoading(false);
   }
 
-  useEffect(getMovies, []);
+  useEffect(() => {getMovies()}, []);
 
   return (
     <div>
       <h1>The Movies!👻</h1>
       {loading ?
         <strong>Loading...</strong> :
-        movies.map((movie) => <Movie movie={movie} />)}
+        movies.map((movie) => <Movie key={movie.id} movie={movie} />)}
     </div>);
 }
 
