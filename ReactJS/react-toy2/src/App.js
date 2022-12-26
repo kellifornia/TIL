@@ -1,26 +1,24 @@
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 
-const Father = styled.div`
+const Wrapper = styled.div`
   display: flex;
+  height: 100vh;
+  width:100vw;
+  justify-content: center;
+  align-items: center;
+  /* theme에 접근이 가능하다. */
+  background-color: ${(props)=>props.theme.backgroundColor};
 `;
 
-const Box = styled.div`
-  background-color: ${props => props.bgColor};
-  width: 100px;
-  height: 100px;
-`;
-
-const Circle = styled(Box)`
-  border-radius: 50%;
+const Title = styled.h1`
+  color: ${(props)=>props.theme.textColor};
 `;
 
 function App() {
   return (
-    <Father>
-      <Box bgColor="teal"/>
-      <Box bgColor="tomato"/>
-      <Circle bgColor="aqua" />
-    </Father>
+    <Wrapper>
+      <Title>HELLO</Title>
+    </Wrapper>
   );
 }
 
