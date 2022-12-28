@@ -11,3 +11,4 @@
 - [Effect: 코드 실행 시점의 선택권을 주는 useEffect함수 사용하기](./ReactJS/03_Effect.md)
 - State, Props, Effect를 활용한 토이 프로젝트: `./ReactJS/react-toy1`
 - [Styled Component: react app에서 스타일을 쉽게 사용하기 위한 CSS 라이브러리](./ReactJS/04_Styled_Component.md)
+- [Typescript: Typescript + ReactJS + styled-compoments로 프로젝트 구성해보기, Typescript 맛보기](./ReactJS/05_Typescript.md)

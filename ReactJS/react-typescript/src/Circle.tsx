@@ -1,27 +1,34 @@
+import { useState } from 'react';
 import styled from 'styled-components';
 
-// [2]Container의 props 타입을 지정하는 방법
 interface ContainerProps {
   bgColor: string;
+  borderColor:string;
 };
+
+interface  CircleProps {
+  // required props
+  bgColor: string;
+  // optional props
+  borderColor?: string;
+  text?:string;
+}
 
 const Container = styled.div<ContainerProps>`
   width: 200px;
   height: 200px;
   background-color: ${props => props.bgColor};
+  border-radius:100px;
+  border: 3px solid ${props => props.borderColor};
 `;
 
-interface  CircleProps {
-  bgColor: string;
+function Circle({bgColor, borderColor, text = "default text"}: CircleProps){
+  
+  const [counter, setCounter] = useState<number | string>(1);
+  setCounter(2);
+  setCounter("Hello");
+
+  return <Container bgColor={bgColor} borderColor={borderColor ?? bgColor}>{text}</Container>
 }
-
-// [1]Circle의 props 타입은 CircleProps이라고 알려주는 것!
-function Circle({bgColor}: CircleProps){
-  return <Container bgColor={bgColor}/>
-}
-
-
-
-
 
 export default Circle;
