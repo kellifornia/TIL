@@ -322,11 +322,11 @@ root.render(
 );
 ```
 
-**iApp.tsx**
+**App.tsx**
 ```typescript
 import styled from "styled-components";
 
-//[4]ThemeProvider의 theme으로 전달하 props를 사용하여 원하는 속성을 부여한다.
+//[4]ThemeProvider의 theme으로 전달한 props를 사용하여 원하는 속성을 부여한다.
 const Container = styled.div`
   background-color: ${props => props.theme.bgColor};
 `;

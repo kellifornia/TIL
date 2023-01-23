@@ -146,7 +146,7 @@ const Circle = styled(Box)`
 
 컴포넌트의 태그를 바꾸고 싶은데, 스타일은 바꾸고 싶지 않을땐 어떻게 styled-components를 활용할 수 있을까?
 
-즉, 아래 코드의 style.`button` 태그를 변경하지만 내부에 정의한 스타일을 그대로 사용하는 또 다른 태그를 만드려면 어떻게 해야할끼?
+즉, 아래 코드의 styled.`button` 태그를 변경하지만 내부에 정의한 스타일을 그대로 사용하는 또 다른 태그를 만드려면 어떻게 해야할끼?
 
 ```javascript
 import styled from "styled-components";

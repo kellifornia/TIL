@@ -84,13 +84,9 @@
 > 
 > **JSX**
 > ```html
->  const btn = React.createElement(
->    "button",
->    {
->      style: { backgroundColor: "tomato" },
->      onClick: () => console.log('hi'),
->    },
->    "Click me!");
+> const btn = (
+>  <button style={{backgroundColor: "tomato" }} onClick={() => console.log("I'm click!")}>"Click me!"</button>
+> );
 >```
 > **React**
 > ```html
@@ -420,7 +416,7 @@ function App() {
 > 
 > 강의를 듣기전에 먼저 코드를 짜보면서 **setState의 동작**과 **rerender가 일어나는 과정**에 궁금증이 생겼다.
 > 
-> [1] 먼저 setState에 값을 넣는 경우 state는 그 값으로 갱시되고 rerender가 일어난다.
+> [1] 먼저 setState에 값을 넣는 경우 state는 그 값으로 갱신되고 rerender가 일어난다.
 > ```javascript
 > const [minutes, setMinutes] = React.useState(0);
 > setMinutes(minutes+1); // minutes = minutes+1;
